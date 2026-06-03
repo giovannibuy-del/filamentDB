@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FilamentDB 3D Printer Spooler</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">FilamentDB</p>
+          <h1>3D-Drucker Spooler</h1>
+          <p class="subtitle">MakerWorld-Links per Drag & Drop importieren, Druckaufträge planen und mehrere Drucker zentral verwalten.</p>
+        </div>
+        <button id="managePrintersButton" class="primary-button">Drucker verwalten</button>
+      </header>
+
+      <main class="layout">
+        <section class="panel drop-panel">
+          <div id="dropZone" class="drop-zone" tabindex="0">
+            <div class="drop-icon">⇩</div>
+            <h2>MakerWorld-Link hier ablegen</h2>
+            <p>Kopiere einen MakerWorld-Link und ziehe ihn in dieses Feld oder füge ihn unten ein.</p>
+            <form id="linkForm" class="link-form">
+              <input id="linkInput" type="url" placeholder="https://makerworld.com/..." autocomplete="off" />
+              <button type="submit">Informationen laden</button>
+            </form>
+          </div>
+
+          <div id="jobPreview" class="job-preview hidden" aria-live="polite">
+            <img id="previewImage" alt="Vorschaubild des Druckauftrags" />
+            <div>
+              <p id="previewSource" class="eyebrow"></p>
+              <h3 id="previewTitle"></h3>
+              <p id="previewDescription"></p>
+              <div class="preview-actions">
+                <label>
+                  Drucker
+                  <select id="targetPrinter"></select>
+                </label>
+                <button id="enqueueButton" class="primary-button">In Warteschlange</button>
+              </div>
+            </div>
+          </div>
+
+          <p id="statusMessage" class="status" role="status"></p>
+        </section>
+
+        <section class="panel">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Spooler</p>
+              <h2>Druckwarteschlange</h2>
+            </div>
+            <button id="clearDoneButton" class="ghost-button">Fertige entfernen</button>
+          </div>
+          <div id="queueList" class="queue-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="printerDialog" class="dialog">
+      <form id="printerForm" method="dialog" class="dialog-card">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Druckerprofil</p>
+            <h2 id="printerDialogTitle">Drucker hinzufügen</h2>
+          </div>
+          <button id="closePrinterDialog" type="button" class="icon-button" aria-label="Dialog schließen">×</button>
+        </div>
+
+        <input id="printerId" type="hidden" />
+        <label>Name<input id="printerName" required placeholder="z. B. Prusa MK4" /></label>
+        <label>Modell<input id="printerModel" placeholder="z. B. MK4, X1C, Ender-3" /></label>
+        <label>Adresse / Host<input id="printerAddress" placeholder="IP, Hostname oder Seriennummer" /></label>
+        <label>Bauraum<input id="printerBedSize" placeholder="z. B. 256 x 256 x 256 mm" /></label>
+        <label>Notizen<textarea id="printerNotes" rows="3" placeholder="Material, Düse, Standort, API-Hinweise ..."></textarea></label>
+
+        <menu class="dialog-actions">
+          <button id="deletePrinterButton" type="button" class="danger-button hidden">Löschen</button>
+          <span></span>
+          <button id="cancelPrinterButton" type="button" class="ghost-button">Abbrechen</button>
+          <button type="submit" class="primary-button">Speichern</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <aside id="printerDrawer" class="printer-drawer" aria-label="Druckerliste">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Geräte</p>
+          <h2>Drucker</h2>
+        </div>
+        <button id="addPrinterButton" class="primary-button">Hinzufügen</button>
+      </div>
+      <div id="printerList" class="printer-list"></div>
+    </aside>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>

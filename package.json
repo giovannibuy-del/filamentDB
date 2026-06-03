@@ -1,0 +1,48 @@
+{
+  "name": "filamentdb-printer-spooler",
+  "version": "0.1.0",
+  "description": "Windows desktop spooler for managing multiple 3D printers and MakerWorld print jobs.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/*.test.js",
+    "build:win": "electron-builder --win portable",
+    "build:win:installer": "electron-builder --win nsis"
+  },
+  "keywords": [
+    "3d-printing",
+    "spooler",
+    "makerworld",
+    "electron"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^37.2.6",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "de.filamentdb.spooler",
+    "productName": "FilamentDB 3D Printer Spooler",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "portable",
+        "nsis"
+      ],
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
